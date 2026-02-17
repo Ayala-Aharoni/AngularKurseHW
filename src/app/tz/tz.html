@@ -1,0 +1,13 @@
+<div>
+    <p>Name: {{ firstName }}</p>
+    <p>Lastname: {{ lastName }}</p>
+    <p>Number of children: {{ numberOfChildren }}</p>
+    <p>ID: {{ idNumber }}</p>
+  
+    <img src="./{{imageName}}" alt="Profile Image" [hidden]="hideImage">
+
+    <!-- כפתור להסתיר/להציג -->
+    <button (click)="toggleImage()">
+      {{ hideImage ? 'הצג תמונה' : 'הסתר תמונה' }}
+    </button>
+  </div>
