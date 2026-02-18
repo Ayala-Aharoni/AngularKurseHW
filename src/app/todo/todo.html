@@ -1,0 +1,94 @@
+<div class="container">
+  
+  
+    <div class="add-todo-form" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
+      <h3>הוספת משימה חדשה</h3>
+      <div>
+        <label>כותרת:</label>
+        <input type="text" [(ngModel)]="newTodo.title" placeholder="מה יש לעשות?">
+      </div>
+      <div style="margin-top: 10px;">
+        <label>תאריך יעד:</label>
+        <input type="date" [(ngModel)]="newTodo.targetDate">
+      </div>
+      <button (click)="addTodo()" style="margin-top: 10px; cursor: pointer;">הוסף משימה ➕</button>
+    </div>
+  
+    <hr>
+  
+    ...
+  @for (todo of todos; track todo.id; let i = $index) {
+
+    <div
+      class="todo-card"
+      [class.done]="todo.status === TodoStatus.Done"
+      [class.inProgress]="todo.status === TodoStatus.InProgress"
+      [class.notDone]="todo.status === TodoStatus.NotDone"
+      [class.even]="i % 2 === 0"
+    >
+      
+      @if (editingTodoId === todo.id) {
+        <input [(ngModel)]="todo.title" placeholder="ערוך כותרת...">
+      } @else {
+        <p><strong>כותרת:</strong> {{ todo.title }}</p>
+      }
+
+      @if (editingTodoId === todo.id) {
+        <input type="date" [ngModel]="todo.targetDate | date:'yyyy-MM-dd'" 
+               (ngModelChange)="updateDate(todo, $event)">
+      } @else {
+        <p [ngStyle]="{ color: isExpired(todo.targetDate) ? 'red' : 'black' }">
+          <strong>תאריך יעד:</strong>
+          {{ todo.targetDate | date:'dd/MM/yyyy' }}
+        </p>
+      }
+
+      <p><strong>סטטוס:</strong> {{ todo.status }}</p>
+
+      <hr>
+      
+      <div class="actions">
+
+        <button (click)="deleteTodo(i)" style="background-color: #ff4d4d; color: white;">
+          מחק משימה 🗑️
+        </button>g
+        @if (!isExpired(todo.targetDate) && editingTodoId !== todo.id) {
+          <button (click)="startEdit(todo.id)">ערוך משימה ✏️</button>
+        }
+
+        @if (editingTodoId === todo.id) {
+          <button (click)="saveEdit()" style="background-color: #4CAF50; color: white;">שמור שינויים ✅</button>
+        }
+
+        <button 
+          [disabled]="todo.status === TodoStatus.NotDone" 
+          (click)="updateStatus(todo, TodoStatus.NotDone)">
+          לביצוע
+        </button>
+
+        <button 
+          [disabled]="todo.status === TodoStatus.InProgress" 
+          (click)="updateStatus(todo, TodoStatus.InProgress)">
+          בתהליך
+        </button>
+
+        <button 
+          [disabled]="todo.status === TodoStatus.Done" 
+          (click)="updateStatus(todo, TodoStatus.Done)">
+          בוצע
+        </button>
+      </div>
+
+    </div>
+
+  }
+
+  @if (todos.length === 0) {
+    <p class="empty">אין משימות להצגה</p>
+  }
+
+  @if (todos.length > 0) {
+    <p>זוהי המשימה האחרונה שלך...</p>
+  }
+
+</div>
