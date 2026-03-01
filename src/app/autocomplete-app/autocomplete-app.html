@@ -1,0 +1,6 @@
+<app-input-app 
+  [inputName]="inputName" 
+  (search)="filterItems($event)">
+</app-input-app>
+
+<app-list [items]="filteredItems"></app-list>

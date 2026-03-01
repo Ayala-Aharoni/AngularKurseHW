@@ -1,6 +1,19 @@
 <h1>first lesson</h1>
 <p>hay evey one todey i begin learn angular</p>
 <app-tz></app-tz> 
-<app-todo></app-todo>   
+<app-todo></app-todo> 
+
+
+
+<app-autocomplete 
+  [items]="colors" 
+  [inputName]="inputNameForColors">
+</app-autocomplete>
+
+<app-autocomplete 
+  [items]="countries" 
+  [inputName]="inputNameForCountries">
+</app-autocomplete>
+
  <router-outlet />
 
